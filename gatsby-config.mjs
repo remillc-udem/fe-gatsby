@@ -1,5 +1,5 @@
-import { dirname, join } from "node:path"
-import { fileURLToPath } from "node:url"
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -9,15 +9,32 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const config = {
   siteMetadata: {
     title: `Les bibliothèques / UdeM`,
-    siteUrl: `https://www.yourdomain.tld`
+    siteUrl: `https://bib.umontreal.ca`
   },
+  trailingSlash: 'never',
   plugins: [
+    'gatsby-plugin-provide-react',
+    {
+      resolve: `gatsby-plugin-alias-imports`,
+      options: {
+        alias: {
+          '@/components': 'src/components',
+          '@/images': 'src/images'
+        },
+        extensions: [
+          'js',
+          'jsx',
+          'mdx'
+        ],
+      }
+    },
+    'gatsby-plugin-react-svg',
     'gatsby-plugin-image',
     'gatsby-plugin-sitemap',
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
-        icon: 'src/images/icon.png'
+        icon: 'src/images/logo-bib-icon.svg'
       }
     },
     'gatsby-plugin-mdx',
@@ -39,7 +56,7 @@ const config = {
       },
       __key: 'pages'
     },
-    // Add a collection called "posts" that looks
+    // Add a collection called 'posts' that looks
     // for files in content/posts
     {
       resolve: `gatsby-source-filesystem`,
@@ -48,6 +65,24 @@ const config = {
         path: join(__dirname, 'content'),
       },
     },
+    {
+      resolve: `gatsby-plugin-webfonts`,
+      options: {
+        fonts: {
+          google2: [
+            {
+              family: 'Inter',
+              axes: 'wght@300..600',
+            },
+            // {
+            //   family: 'Open Sans Condensed',
+            //   variants: ['300', '700'],
+            // },
+          ],
+        },
+      },
+    },
+    'gatsby-plugin-bib-theme'
   ]
 }
 

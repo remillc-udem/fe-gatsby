@@ -46,8 +46,8 @@ export const createPages = async ({ graphql, actions, reporter, getNode }) => {
   // `context` is available in the template as a prop and as a variable in GraphQL
 
   pages.forEach(node => {
-    console.log('node: %o', node)
-    console.log(node.parent)
+    // console.log('node: %o', node)
+    // console.log(node.parent)
 
     const basePath = node.parent ? `/${getNode(node.parent).relativeDirectory}` : ''
     const path = `${basePath}/${(node.frontmatter.slug ?? slugify(getNode(node.parent).name)).replace(/index$/i, '')}`
